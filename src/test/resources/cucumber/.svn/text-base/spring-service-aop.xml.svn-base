@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd        
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<!-- Aspects -->
+	<bean id="userEventLoggingAspect" class="com.yellowbook.dataManager.service.aop.UserEventLoggerAspect"/>	
+
+	<aop:config>
+	
+		<aop:aspect ref="userEventLoggingAspect">
+			<!-- Locks -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.lockBookCode(..))" id="gsLockQueues"/>
+			<aop:before method="logLockBookQueues" pointcut-ref="gsLockQueues"/>
+			
+			<!-- UnLock -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.unlockBookCode(..))" id="gsUnLockQueuesAndListingBookSearch"/>
+			<aop:before method="logUnLockBookAction" pointcut-ref="gsUnLockQueuesAndListingBookSearch"/>
+			
+			<!-- Saves -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.saveDataToLoad(..))" id="gsSaveQueues"/>
+			<aop:before method="logSaveBookQueues" pointcut-ref="gsSaveQueues"/>
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsListingBookSearchService.saveDataToLoadGsCmpTape(..))" id="gsSaveLbs"/>
+			<aop:before method="logSaveBookLbs" pointcut-ref="gsSaveLbs"/>
+			
+			<!-- Deletes -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.deleteDataFromLoad(..))" id="gsDeleteQueues"/>
+			<aop:before method="logDeleteBookQueues" pointcut-ref="gsDeleteQueues"/>
+				
+			
+			<!-- Approve/Inactivate through QUEUES tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.setStatusIntoXrefTables(..))" id="gsStatusQueues"/>
+			<aop:before method="logStatusChangeQueues" pointcut-ref="gsStatusQueues"/>
+			
+			<!-- Activate/Inactivate through Listing/Book_Search tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsListingBookSearchService.changeCmpSetIdStatus(..))" id="gsActivateInactivateLbs"/>
+			<aop:before method="logStatusChangeLbs" pointcut-ref="gsActivateInactivateLbs"/>
+
+			<!-- Approve book through QUEUES/Listing BookSearch tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.setBookStatus(..))" id="gsBookApprove"/>
+			<aop:before method="logBookApproveAction" pointcut-ref="gsBookApprove"/>
+			
+			<!-- Add listing through QUEUES tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.getNextCmpSetId(..))" id="gsAddListing"/>
+			<aop:before method="logAddNewListingAction" pointcut-ref="gsAddListing"/>
+
+			<!-- Cancel listing through QUEUES tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.onCancelListing(..))" id="gsCancelListing"/>
+			<aop:before method="logCancelListingAction" pointcut-ref="gsCancelListing"/>
+			
+			<!-- Change book status through Change Book Status/Upload tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsListingBookSearchService.resetBookStatus(..))" id="gsChangeBookStatus"/>
+			<aop:before method="logBookStatusChangeAction" pointcut-ref="gsChangeBookStatus"/>
+			
+			<!-- Upload txt file through Change Book Status/Upload tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GandSUploadCmpTapeService.uploadCmpTapeData(..))" id="gsUploadCmpTape"/>
+			<aop:before method="logUploadCmpTapeAction" pointcut-ref="gsUploadCmpTape"/>
+			
+			<!-- Delete a listing through QUEUES tab on click of Replace All button-->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsService.deleteLoadGsCmpTapeByCmpSetId(..))" id="gsDeleteListingOnReplaceAll"/>
+			<aop:before method="logDeleteActionOnCmpTapeReplace" pointcut-ref="gsDeleteListingOnReplaceAll"/>
+			
+			<!-- Cancel listing through LISTING/BOOK SEARCH tab -->
+			<aop:pointcut expression="execution(* com.yellowbook.dataManager.service.GovtAndSchoolsListingBookSearchService.onCancel(..))" id="gsListingbooksearchCancelListing"/>
+			<aop:before method="logCancelListingAction" pointcut-ref="gsListingbooksearchCancelListing"/>
+		</aop:aspect>
+		
+	</aop:config>
+	
+
+
+</beans> 

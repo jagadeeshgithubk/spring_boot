@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/oxm 
+        http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd"
+    default-autowire="byName">
+    	
+    <import resource="classpath:spring/spring-service-aop.xml"/>
+    <import resource="classpath:spring/MDB_DataSource.xml"/>
+    <import resource="classpath:spring/NR_DataSource.xml"/>
+    <import resource="classpath:spring/WYG_DataSource.xml"/>
+	
+	<context:component-scan base-package="com.yellowbook.dataManager.service.aop"/>
+	<context:component-scan base-package="com.yellowbook.dataManager.service.impl"/>
+	<context:component-scan base-package="com.yellowbook.dataManager.dao.impl"/>
+	<context:component-scan base-package="com.yellowbook.dataManager.mailingAddressExtraction.*"/>
+	<context:component-scan base-package="com.yellowbook.dataManager.idd.*"/>
+	<context:component-scan base-package="com.yellowbook.mdb2.printbookscope.api.impl"/>
+	<context:component-scan base-package="com.yellowbook.mdb2.printbookscope.util"/>
+	<context:component-scan base-package="com.yellowbook.mdb2.common.dao.impl"/>
+	<context:component-scan base-package="com.yellowbook.mdb2.printbookscope.dao.impl"/>
+	
+	<oxm:jaxb2-marshaller id="marshaller" contextPath="com.yellowbook.geocoding.webservices.request"/>
+	
+    <bean id="geoCodingServiceWrapper" class="com.yellowbook.dataManager.service.impl.GeoCodingServiceWrapperImpl">
+        <property name="marshaller" ref="marshaller"/>
+        <property name="unmarshaller" ref="marshaller"/>
+        <property name="channelId" value="${geocoding.ws.channelId}"/>
+        <property name="geocodeUrl" value="${geocoding.ws.url}"/>
+    </bean>
+    
+</beans>

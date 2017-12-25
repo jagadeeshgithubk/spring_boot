@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/226979/DataTeam/MDBServices/trunk/src/main/resources/spring
+END
+WYG_DataSource.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/223308/DataTeam/MDBServices/trunk/src/main/resources/spring/WYG_DataSource.xml
+END
+mdbsvc-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/226979/DataTeam/MDBServices/trunk/src/main/resources/spring/mdbsvc-config.xml
+END
+NR_DataSource.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/223308/DataTeam/MDBServices/trunk/src/main/resources/spring/NR_DataSource.xml
+END
+MDB_DataSource.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/223308/DataTeam/MDBServices/trunk/src/main/resources/spring/MDB_DataSource.xml
+END
+spring-service-aop.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/223308/DataTeam/MDBServices/trunk/src/main/resources/spring/spring-service-aop.xml
+END
